@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Registration Form</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .form-card {
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 40px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      color: #ffffff;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .form-header h2 {
+      font-size: 28px;
+      color: #f8fafc;
+      letter-spacing: 0.5px;
+    }
+
+    .form-header p {
+      color: #94a3b8;
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-control {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1.5px solid #334155;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 15px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .input-control:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .toggle-pwd {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .toggle-pwd:hover {
+      color: #6366f1;
+    }
+
+    /* Custom Select Dropdown */
+    select.input-control {
+      appearance: none;
+      cursor: pointer;
+    }
+
+    select.input-control option {
+      background: #1e293b;
+      color: #fff;
+    }
+
+    /* Custom Checkbox Toggle */
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+      cursor: pointer;
+    }
+
+    .custom-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #475569;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      display: none;
+    }
+
+    .checkbox-group input[type="checkbox"]:checked + .custom-checkbox {
+      background: #6366f1;
+      border-color: #6366f1;
+    }
+
+    .custom-checkbox::after {
+      content: '✓';
+      color: #ffffff;
+      font-size: 14px;
+      display: none;
+      font-weight: bold;
+    }
+
+    .checkbox-group input[type="checkbox"]:checked + .custom-checkbox::after {
+      display: block;
+    }
+
+    .checkbox-label {
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    /* Submit Button */
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    /* Feedback Message */
+    .status-message {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+      display: none;
+    }
+
+    .status-message.success {
+      color: #4ade80;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-card">
+    <div class="form-header">
+      <h2>Join Us</h2>
+      <p>Create your modern user profile</p>
+    </div>
+
+    <form id="interactiveForm">
+      <!-- Full Name -->
+      <div class="input-group">
+        <label for="fullName">Full Name</label>
+        <div class="input-wrapper">
+          <input type="text" id="fullName" class="input-control" placeholder="John Doe" required />
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="input-group">
+        <label for="email">Email Address</label>
+        <div class="input-wrapper">
+          <input type="email" id="email" class="input-control" placeholder="name@example.com" required />
+        </div>
+      </div>
+
+      <!-- Role Selection -->
+      <div class="input-group">
+        <label for="role">Select Interest</label>
+        <div class="input-wrapper">
+          <select id="role" class="input-control" required>
+            <option value="" disabled selected>Choose an interest...</option>
+            <option value="developer">Web Development</option>
+            <option value="designer">UI/UX Design</option>
+            <option value="gaming">Game Development</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Password Field with Toggle -->
+      <div class="input-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <input type="password" id="password" class="input-control" placeholder="••••••••" required />
+          <button type="button" class="toggle-pwd" onclick="togglePasswordVisibility()">SHOW</button>
+        </div>
+      </div>
+
+      <!-- Terms & Conditions Checkbox -->
+      <label class="checkbox-group">
+        <input type="checkbox" id="terms" required />
+        <span class="custom-checkbox"></span>
+        <span class="checkbox-label">I agree to the Terms & Conditions</span>
+      </label>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn-submit">Create Account</button>
+
+      <div id="statusMessage" class="status-message">Account created successfully!</div>
+    </form>
+  </div>
+
+  <script>
+    // Password Visibility Toggle Function
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      const toggleBtn = document.querySelector('.toggle-pwd');
+
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleBtn.textContent = 'HIDE';
+      } else {
+        passwordInput.type = 'password';
+        toggleBtn.textContent = 'SHOW';
+      }
+    }
+
+    // Form Submission Handling
+    document.getElementById('interactiveForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const statusMsg = document.getElementById('statusMessage');
+      statusMsg.className = 'status-message success';
+      statusMsg.style.display = 'block';
+
+      // Reset form fields after 2 seconds
+      setTimeout(() => {
+        this.reset();
+        statusMsg.style.display = 'none';
+      }, 2500);
+    });
+  </script>
+
+</body>
+</html>
